@@ -57,9 +57,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate grade
     $input_grade = trim($_POST["grade"]);
     if(empty($input_grade)){
-        $grade_err = "Please enter a grade.";
+        $grade_err = "Please enter the grade.";
+    } elseif(!ctype_digit($input_grade)){
+        $grade_err = "Please enter a positive integer.";
+    } elseif((int)$input_grade < 0 || (int)$input_grade > 100){
+        $grade_err = "Please enter an grade between 0 and 100.";
     } else {
-        $grade = $input_grade;
+        $grade = (int)$input_grade;
     }
 
     // If no errors, update record

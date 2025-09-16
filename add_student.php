@@ -53,13 +53,17 @@ if(empty($input_age)){
     $age = (int)$input_age;
 }
 
-// Validate grade
-$input_grade = isset($_POST["grade"]) ? trim($_POST["grade"]) : "";
-if(empty($input_grade)){
-    $grade_err = "Please enter a grade.";
-} else{
-    $grade = $input_grade;
-}
+    // Validate grade
+    $input_grade = trim($_POST["grade"]);
+    if(empty($input_grade)){
+        $grade_err = "Please enter the grade.";
+    } elseif(!ctype_digit($input_grade)){
+        $grade_err = "Please enter a positive integer.";
+    } elseif((int)$input_grade < 0 || (int)$input_grade > 100){
+        $grade_err = "Please enter an grade between 0 and 100.";
+    } else {
+        $grade = (int)$input_grade;
+    }
     
     // Check input errors before inserting in database
     if(empty($first_name_err) && empty($last_name_err) && empty($age_err) && empty($grade_err)){
